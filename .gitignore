@@ -42,6 +42,7 @@ proguard/
 *.iws
 .idea/
 out/
+.gradle/
  
 #mac
 *.DS_Store
