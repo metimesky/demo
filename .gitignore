@@ -16,7 +16,7 @@ log/
 # Java class files
 *.class
 .settings/
-*.jar
+#*.jar
 build/
 classes/
 .classpath
