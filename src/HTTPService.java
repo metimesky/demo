@@ -69,13 +69,13 @@ class LoginHttpHandler implements HttpHandler {
 ////        out.write("hello world\n".getBytes());
 ////        out.close();
 //
-//        User u = (User) HttpSession.getObjFromSession(httpExchange, "userSession");
-//        if (u == null) {
-//            //重新登陆
-//            HtmlTemplate.forPage("login.html", new RequestContent(httpExchange), new ResponseContent(httpExchange));
-//        }else {
-//            //跳转到成功登陆后界面
-//
-//        }
+        User u = (User) HttpSession.getObjFromSession(httpExchange, "userSession");
+        if (u == null) {
+            //重新登陆
+            HtmlTemplate.forPage("login.html", new RequestContent(httpExchange), new ResponseContent(httpExchange));
+        }else {
+            //跳转到成功登陆后界面
+
+        }
     }
 }

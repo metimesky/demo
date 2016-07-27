@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+<script type="text/javascript">
+var lastTime = 0;
+var prefixes = 'webkit moz ms o'.split(' '); //各浏览器前缀
+
+var requestAnimationFrame = window.requestAnimationFrame;
+var cancelAnimationFrame = window.cancelAnimationFrame;
+
+var prefix;
+//通过遍历各浏览器前缀，来得到requestAnimationFrame和cancelAnimationFrame在当前浏览器的实现形式
+for( var i = 0; i < prefixes.length; i++ ) {
+    if ( requestAnimationFrame && cancelAnimationFrame ) {
+      break;
+    }
+    prefix = prefixes[i];
+    requestAnimationFrame = requestAnimationFrame || window[ prefix + 'RequestAnimationFrame' ];
+    cancelAnimationFrame  = cancelAnimationFrame  || window[ prefix + 'CancelAnimationFrame' ] || window[ prefix + 'CancelRequestAnimationFrame' ];
+}
+
+//如果当前浏览器不支持requestAnimationFrame和cancelAnimationFrame，则会退到setTimeout
+if ( !requestAnimationFrame || !cancelAnimationFrame ) {
+    requestAnimationFrame = function( callback, element ) {
+      var currTime = new Date().getTime();
+      //为了使setTimteout的尽可能的接近每秒60帧的效果
+      var timeToCall = Math.max( 0, 16 - ( currTime - lastTime ) ); 
+      var id = window.setTimeout( function() {
+        callback( currTime + timeToCall );
+      }, timeToCall );
+      lastTime = currTime + timeToCall;
+      return id;
+    };
+    
+    cancelAnimationFrame = function( id ) {
+      window.clearTimeout( id );
+    };
+}
+
+//得到兼容各浏览器的API
+window.requestAnimationFrame = requestAnimationFrame; 
+window.cancelAnimationFrame = cancelAnimationFrame;
+
+
+function initMap() {
+	var myCanvas = document.getElementById("myCanvas");
+	var context = myCanvas.getContext("2d");
+	context.strokeStyle = hsl(120,50%,50%)';
+	context.lineWidth = 13;//设置线宽
+   	context.beginPath();
+   	context.moveTo(10, 10);
+   	context.lineTo(10,20);
+   	context.moveTo(10, 15);
+   	context.lineTo(10, 100);
+   	context.stroke();
+
+   	alert(xx);
+}
+
+</script>
+</head>
+<body style="position:relative; margin:10px">
+<div id="demo" style="position:absolute; width:10px; height:10px; background:#ccc; left:0; top:10px; font-size:11px">1</div>
+  <canvas id = "myCanvas" width = '500' height = '500'>faf</canvas>
+<script>
+   // var myCanvas = document.getElementById("myCanvas");
+   // var context = myCanvas.getContext("2d");
+   // context.fillStyle ='rgba(255,0,0,.3)';//填充颜色：红色，半透明
+   // context.strokeStyle ='hsl(120,50%,50%)';//线条颜色：绿色
+   // context.lineWidth = 13;//设置线宽
+   // context.beginPath();
+   // context.moveTo(200,100);
+   // context.lineTo(100,200);
+   // context.lineTo(300,200);
+   // context.closePath();//可以把这句注释掉再运行比较下不同
+   // context.stroke();//画线框
+   // context.fill();//填充颜色
+
+   var myCanvas = document.getElementById("myCanvas");
+	var context = myCanvas.getContext("2d");
+	context.strokeStyle = 'hsl(120,50%,50%)';
+	context.lineWidth = 1;//设置线宽
+   	context.beginPath();
+   	context.moveTo(10, 10);
+   	context.lineTo(10, 20);
+   	context.moveTo(10, 15);
+   	context.lineTo(800, 15);
+   	context.stroke();
+
+  </script>
+<script>
+var demo = document.getElementById('demo');
+function rander(){
+    demo.style.left = parseInt(demo.style.left) + 1 + 'px'; //每一帧向右移动1px
+}
+requestAnimationFrame(function(){
+    rander();
+    //当超过300px后才停止
+    if(parseInt(demo.style.left)<=300) requestAnimationFrame(arguments.callee);
+});
+</script>
+</body>
+</html>
